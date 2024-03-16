@@ -78,4 +78,4 @@ for i in range(steps):
     plt.close(fig)
 
 import os
-os.system("cd frames; rm *; ffmpeg -framerate 30 -pattern_type glob -i '*.png' -c:v libx264 -pix_fmt yuv420p out.mp4")
+os.system("cd frames; ffmpeg -framerate 30 -pattern_type glob -i '*.png' -c:v libx264 -pix_fmt yuv420p out.mp4")
