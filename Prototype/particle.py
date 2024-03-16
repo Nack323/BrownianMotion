@@ -7,9 +7,9 @@ class Particle:
         self.vx = vx;
         self.vy = vy;
 
-    def step():
+    def step(self):
         self.x = self.x + self.dt * self.vx 
         self.y = self.y + self.dt * self.vy 
 
-    def getPos():
+    def getPos(self):
         return self.x, self.y
