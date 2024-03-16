@@ -1,5 +1,13 @@
 from particle import *
+import numpy as np
 
-P = Particle(0, 0, 0, 0, 0.1)
+""" Description of experiment
+there will be n particles of the same size and all will have
+a momentum and radius. The colission between them will be completely
+elastic and they will bounce against walls
+ """
 
-print(P.getPos())
+n = 10
+
+particleArray = [Particle(0.1, np.random(), np.random(), 
+    np.random(), np.random(), 0.01)]
