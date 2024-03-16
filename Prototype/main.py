@@ -8,14 +8,21 @@ a momentum and radius. The colission between them will be completely
 elastic and they will bounce against walls
  """
 
-n = 100
-steps = 500
+n = 255
+steps = 2000
 DT = 0.01
 massMultiplier = 1 # this will be multiplied to the radious cubed so equal density
                    # between all particles is assumed
-                   
+
+X = np.arange(1, 9, 0.5)
+Y = np.arange(1, 9, 0.5)
+CoordList = [(i, j) for i in X for j in Y]
+print(f'The maximum number of points is {len(CoordList)}')
+if n > len(CoordList):
+    exit()
+
 # create particles
-particleArray = [Particle(0.1, np.random.rand() * 5 + 2.5, np.random.rand() * 5 + 2.5, 
+particleArray = [Particle(0.08, CoordList[i][0], CoordList[i][1], 
     np.random.rand() * 10 - 5, np.random.rand() * 10 - 5, DT) for i in range(n)]
 
 def particleDistance(a, b):
@@ -28,7 +35,8 @@ for i in range(steps):
     # step all particles
     for p in particleArray:
         p.step()
-    
+    if i % 10 == 0:
+        print(f"{i} done           ", end='\r')
     # check for colission
     for a in range(n):
         for b in range(n):
@@ -50,7 +58,7 @@ for i in range(steps):
                     ub = vb - 2 * ma / M * (np.dot((vb - va), (rb - ra)))/(np.linalg.norm(rb - ra) ** 2) * (rb - ra)
                     particleArray[a].setVVector(ua)
                     particleArray[b].setVVector(ub)
-                    print('aa')
+                    #print('aa')
     for particle in particleArray:
         if particle.x >= 9.9 or particle.x <=0.1:
             vx = particle.vx
