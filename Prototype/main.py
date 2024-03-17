@@ -8,9 +8,9 @@ a momentum and radius. The colission between them will be completely
 elastic and they will bounce against walls
  """
 
-n = 255
+n = 250
 steps = 2000
-DT = 0.01
+DT = 1/60
 massMultiplier = 1 # this will be multiplied to the radious cubed so equal density
                    # between all particles is assumed
 
@@ -36,7 +36,7 @@ for i in range(steps):
     for p in particleArray:
         p.step()
     if i % 10 == 0:
-        print(f"{i} done           ", end='\r')
+        print(f"{i} done                ", end='\r')
     # check for colission
     for a in range(n):
         for b in range(n):
@@ -60,13 +60,25 @@ for i in range(steps):
                     particleArray[b].setVVector(ub)
                     #print('aa')
     for particle in particleArray:
-        if particle.x >= 9.9 or particle.x <=0.1:
+        if particle.x > 9.9:
             vx = particle.vx
             vy = particle.vy
+            particle.x = 9.9
             particle.setVVector([-vx, vy])
-        if particle.y >= 9.9 or particle.y <=0.1:
+        if particle.x <0.1:
             vx = particle.vx
             vy = particle.vy
+            particle.x = 0.1
+            particle.setVVector([-vx, vy])
+        if particle.y > 9.9:
+            vx = particle.vx
+            vy = particle.vy
+            particle.y = 9.9
+            particle.setVVector([vx, -vy])
+        if particle.y < 0.1:
+            vx = particle.vx
+            vy = particle.vy
+            particle.y = 0.1
             particle.setVVector([vx, -vy])
     # render and save frame
     fig, ax = plt.subplots(figsize=(10, 10))
@@ -84,6 +96,7 @@ for i in range(steps):
         ax.add_patch(c)
     fig.savefig(f"frames/frame{str(i).zfill(4)}.png")
     plt.close(fig)
+    del fig, ax
 
 import os
-os.system("cd frames; ffmpeg -framerate 30 -pattern_type glob -i '*.png' -c:v libx264 -pix_fmt yuv420p out.mp4")
+os.system("cd frames; ffmpeg -framerate 60 -pattern_type glob -i '*.png' -c:v libx264 -pix_fmt yuv420p out.mp4")
