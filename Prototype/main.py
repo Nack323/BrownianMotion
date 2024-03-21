@@ -9,8 +9,8 @@ elastic and they will bounce against walls
  """
 
 n = 250
-steps = 2000
-DT = 1/60
+steps = 5000
+DT = 1/120
 massMultiplier = 1 # this will be multiplied to the radious cubed so equal density
                    # between all particles is assumed
 
